@@ -1,20 +1,23 @@
 //import
-import {createStorage,combineReducers,compose,applyMiddleware} from 'redux'
+import {createStore,combineReducers,compose,applyMiddleware} from 'redux'
 import userReducer from './userDuck'
 import userNew from './userNew'
+import charReducer,{getCharacterAction} from './charactersDuck'
 import thunk from 'redux-thunk'
 //
 
 let rootReducers=combineReducers({
     user:userReducer,
-    userNew:userNew
+    userNew:userNew,
+    characters:charReducer
 })
 //el navegador soporta las herramientas de desarrollo
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export default function generateStore(){
-    let store=createStorage(
+    let store=createStore(
         rootReducers,
         composeEnhancers(applyMiddleware(thunk)))
+    getCharacterAction()(store.dispatch,store.getState)
     return store
 }

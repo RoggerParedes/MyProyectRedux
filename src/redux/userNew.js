@@ -3,7 +3,7 @@
 //constants
 
 let initialState ={
-    logged=false
+    logged:false
 }
 
 let LOGIN="LOGIN"

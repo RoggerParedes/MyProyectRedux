@@ -1,46 +1,76 @@
 import React, { useState, useEffect } from 'react'
 import Card from '../card/Card'
 import styles from './home.module.css'
-import axios from 'axios'
+//import axios from 'axios'
+import {connect} from 'react-redux'
+import {removeCharacterAction} from '../../redux/charactersDuck'
 
-let URL = "https://rickandmortyapi.com/api"
+//let URL = "https://rickandmortyapi.com/api"
 
-export default function Home() {
+ function Home({chars,removeCharacterAction}) {
 
-    let [chars, setChars] = useState([])
+   // let [chars, setChars] = useState([])
 
-    useEffect(() => {
+  /*  useEffect(() => {
         getCharacters()
-    }, [])
+    }, [])*/
 
-    function nextChar() {
+   /* function nextChar() {
         chars.shift()
         if (!chars.length) {
             //get more characters
         }
         setChars([...chars])
-    }
+    }*/
 
-    function renderCharacter() {
-        let char = chars[0]
+    /*function renderCharacter() {
+        //let char = chars[0]
         return (
-            <Card leftClick={nextChar} {...char} />
+            <Card />
         )
-    }
+    }*/
 
-    function getCharacters() {
+ /*   function getCharacters() {
         return axios.get(`${URL}/character`)
             .then(res => {
                 setChars(res.data.results)
             })
-    }
+    }*/
 
-    return (
+   /* return (
         <div className={styles.container}>
             <h2>Personajes de Rick y Morty</h2>
             <div>
                 {renderCharacter()}
             </div>
         </div>
+    )*/
+    function renderCharacter() {
+        let char = chars[0]
+        return (
+            <Card leftClick={nextharacter} {...char}/>
+        )
+    }
+
+    function nextharacter(){
+        removeCharacterAction() //le paso el distpach y el state por connect
+    }
+
+
+    return (
+        <div className={styles.container}>
+            <h2>Personajes de Rick y Morty</h2>
+            <div >
+                {renderCharacter()}
+            </div>
+        </div>
     )
 }
+
+function mapStateToProp(state){//funcion que recibe todo el state
+    return {
+        chars:state.characters.array
+    }
+}
+
+export default connect(mapStateToProp,{removeCharacterAction})(Home)
