@@ -1,5 +1,6 @@
 
 import {loginWithGoogle,signOutGoogle} from '../firebase'
+import {getFavoritosSeleccionados} from './charactersDuck'
 
 ////constants
 
@@ -71,6 +72,7 @@ export let doGoogleLoginAction=()=>(dispatch,getState)=>{
                 }
             })
             saveStorage(getState())
+            getFavoritosSeleccionados()(dispatch,getState)
         })
         .catch(err=>{
             console.log(err)

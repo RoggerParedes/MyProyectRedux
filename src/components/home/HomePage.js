@@ -3,11 +3,11 @@ import Card from '../card/Card'
 import styles from './home.module.css'
 //import axios from 'axios'
 import {connect} from 'react-redux'
-import {removeCharacterAction} from '../../redux/charactersDuck'
+import {removeCharacterAction,addToFavoriteAction} from '../../redux/charactersDuck'
 
 //let URL = "https://rickandmortyapi.com/api"
 
- function Home({chars,removeCharacterAction}) {
+ function Home({chars,removeCharacterAction,addToFavoriteAction}) {
 
    // let [chars, setChars] = useState([])
 
@@ -48,8 +48,12 @@ import {removeCharacterAction} from '../../redux/charactersDuck'
     function renderCharacter() {
         let char = chars[0]
         return (
-            <Card leftClick={nextharacter} {...char}/>
+            <Card rightClick={addFavorite} leftClick={nextharacter} {...char}/>
         )
+    }
+
+    function addFavorite(){
+        addToFavoriteAction()
     }
 
     function nextharacter(){
@@ -73,4 +77,4 @@ function mapStateToProp(state){//funcion que recibe todo el state
     }
 }
 
-export default connect(mapStateToProp,{removeCharacterAction})(Home)
+export default connect(mapStateToProp,{removeCharacterAction,addToFavoriteAction})(Home)

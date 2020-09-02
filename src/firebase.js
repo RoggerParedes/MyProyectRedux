@@ -1,5 +1,7 @@
 import firebase from 'firebase/app'
 import 'firebase/auth'
+import 'firebase/firestore'
+import 'firebase/analytics'
 
 let firebaseConfig = {
     apiKey: "AIzaSyAL3oTOf2kvy8d2zyFTaEgtbv6dk20NFzI",
@@ -8,13 +10,29 @@ let firebaseConfig = {
     projectId: "proyectredux0923",
     storageBucket: "proyectredux0923.appspot.com",
     messagingSenderId: "464637919384",
-    appId: "1:464637919384:web:a2864495d5d69ed4c290ed",
-    measurementId: "G-NWKM0G7EL7"
+    appId: "1:464637919384:web:04ca0211508b9ae7c290ed",
+    measurementId: "G-51CF8MF2MF"
   };
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
-  //firebase.analytics();
+  firebase.analytics();
 
+
+  let db=firebase.firestore().collection('favs')
+
+  export function updateDB(array,uid){
+    console.log("esto en firebase")
+      return db.doc(uid).set({favorites:[...array]})//siemptre se manda un objeto a firebase7
+    
+
+  }
+
+  export function getFavorites(uid){
+    return db.doc(uid).get()
+    .then(snap=>{
+        return snap.data().favorites
+    })
+  }
 
   export function loginWithGoogle(){
       let provider=new firebase.auth.GoogleAuthProvider()
