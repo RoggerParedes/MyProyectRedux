@@ -2,7 +2,7 @@
 import {createStore,combineReducers,compose,applyMiddleware} from 'redux'
 import userReducer,{restoreSessionAction} from './userDuck'
 import userNew from './userNew'
-import charReducer,{getCharacterAction} from './charactersDuck'
+import charReducer,{getCharacterAction,restoreCharactersSessionAction} from './charactersDuck'
 import thunk from 'redux-thunk'
 //
 
@@ -20,5 +20,6 @@ export default function generateStore(){
         composeEnhancers(applyMiddleware(thunk)))
     getCharacterAction()(store.dispatch,store.getState)
     restoreSessionAction()(store.dispatch)
+    restoreCharactersSessionAction()(store.dispatch)
     return store
 }

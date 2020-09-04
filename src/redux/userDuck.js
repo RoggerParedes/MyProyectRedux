@@ -36,6 +36,8 @@ let LOGIN="LOGIN"
 function saveStorage(storage){
     localStorage.storage=JSON.stringify(storage)
 }
+
+
  
 // /Actions
 export let logOutAction=()=>(dispatch,getState)=>{
@@ -44,10 +46,13 @@ export let logOutAction=()=>(dispatch,getState)=>{
         type:LOG_OUT
     })
     localStorage.removeItem('storage')
+    localStorage.removeItem('favoritesUser')
 
 }
 export let restoreSessionAction=()=>(dispatch)=>{
     let storage=localStorage.getItem('storage')
+    let favoritesUser=localStorage.getItem('favoritesUser')
+    favoritesUser=JSON.parse(favoritesUser)
     storage=JSON.parse(storage)//es el inverso del stringify para el texto se onvierta en un objeto
     if(storage&&storage.user){
         dispatch({

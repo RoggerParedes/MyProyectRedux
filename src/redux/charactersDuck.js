@@ -92,6 +92,17 @@ export let removeCharacterAction=()=>(distpach,getState)=>{
     })
 }
 
+export let restoreCharactersSessionAction=()=>(dispatch,getState)=>{
+    let favoritesUser=localStorage.getItem('favoritesUser')
+    favoritesUser=JSON.parse(favoritesUser)
+    if(favoritesUser){
+        dispatch({
+            type:GET_FAV_SUCCES,
+            payload:favoritesUser
+        })
+    }
+}
+
 export let addToFavoriteAction=()=>(dispatch,getState)=>{
     let {array,favorites}=getState().characters
     let char=array.shift()
@@ -105,6 +116,10 @@ export let addToFavoriteAction=()=>(dispatch,getState)=>{
     })
 }   
 
+function saveFavorites(fav){
+    localStorage.favoritesUser=JSON.stringify(fav)
+}
+
 export let getFavoritosSeleccionados=()=>(distpach,getState)=>{
     distpach({
         type:GET_FAV
@@ -112,6 +127,7 @@ export let getFavoritosSeleccionados=()=>(distpach,getState)=>{
     let {uid}=getState().user
     return getFavorites(uid)
         .then(array=>{
+            saveFavorites([...array])
             distpach({
                 type:GET_FAV_SUCCES,
                 payload: [...array] 
